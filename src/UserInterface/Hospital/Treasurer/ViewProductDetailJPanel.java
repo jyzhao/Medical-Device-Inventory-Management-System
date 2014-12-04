@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterface.Hospital.Doctor;
+package UserInterface.Hospital.Treasurer;
 
 import Business.Product.Product;
 import java.awt.CardLayout;

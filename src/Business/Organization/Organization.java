@@ -30,6 +30,10 @@ public abstract class Organization {
 //            public Organization createOrganization() {
 //                return new AdminOrganization();
 //            }
+        }, Treasurer("Treasurer Organization"){
+//            public Organization createOrganization() {
+//                return new DoctorOrganization();
+//            }
         }, Doctor("Doctor Organization"){
 //            public Organization createOrganization() {
 //                return new DoctorOrganization();

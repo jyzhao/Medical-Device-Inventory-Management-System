@@ -213,7 +213,7 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         
         organization.getEmployeeDirectory().createEmployee(name);
         
-        //populateTable(organization);
+        populateTable((Organization) organizationJComboBox.getSelectedItem());
     }//GEN-LAST:event_addJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed

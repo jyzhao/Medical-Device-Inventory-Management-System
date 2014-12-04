@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterface.Hospital.Doctor;
+package UserInterface.Hospital.Treasurer;
 
 import Business.Employee.Employee;
 import Business.Order.MasterOrderCatalog;
@@ -431,7 +431,7 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
 
         OrderItem oi = (OrderItem) orderJTable.getValueAt(selectedRow, 0);
 
-        if (modifyQuantityJTextField.getText() != null) {
+        if (modifyQuantityJTextField.getText() != null && modifyQuantityJTextField.getText().equals("")) {
             modifyQuantity = Integer.parseInt(modifyQuantityJTextField.getText());
         }
         else {

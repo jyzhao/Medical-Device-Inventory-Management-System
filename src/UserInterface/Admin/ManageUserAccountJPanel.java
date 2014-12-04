@@ -27,14 +27,16 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
     private Enterprise enterprise;
     private EcoSystem system;
 
-    public ManageUserAccountJPanel(JPanel container, Enterprise enterprise,EcoSystem system) {
+    public ManageUserAccountJPanel(JPanel container, Enterprise enterprise, EcoSystem system) {
         initComponents();
         this.enterprise = enterprise;
         this.container = container;
         this.system = system;
 
         popOrganizationComboBox();
-        employeeJComboBox.removeAllItems();
+        populateEmployeeComboBox((Organization) organizationJComboBox.getSelectedItem());
+        populateRoleComboBox((Organization) organizationJComboBox.getSelectedItem());
+
         popData();
     }
 
@@ -45,18 +47,19 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
             organizationJComboBox.addItem(organization);
         }
     }
-    
-    public void populateEmployeeComboBox(Organization organization){
+
+    public void populateEmployeeComboBox(Organization organization) {
         employeeJComboBox.removeAllItems();
-        
-        for (Employee employee : organization.getEmployeeDirectory().getEmployeeList()){
+
+        for (Employee employee : organization.getEmployeeDirectory().getEmployeeList()) {
             employeeJComboBox.addItem(employee);
         }
     }
-    
-    private void populateRoleComboBox(Organization organization){
+
+    private void populateRoleComboBox(Organization organization) {
         roleJComboBox.removeAllItems();
-        for (Role role : organization.getSupportedRole()){
+        
+        for (Role role : organization.getSupportedRole()) {
             roleJComboBox.addItem(role);
         }
     }
@@ -252,9 +255,9 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         Organization organization = (Organization) organizationJComboBox.getSelectedItem();
         Employee employee = (Employee) employeeJComboBox.getSelectedItem();
         Role role = (Role) roleJComboBox.getSelectedItem();
-        
+
         organization.getUserAccountDirectory().createUserAccount(userName, password, employee, role);
-        
+
         popData();
     }//GEN-LAST:event_createUserJButtonActionPerformed
 
@@ -267,7 +270,7 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
 
     private void organizationJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationJComboBoxActionPerformed
         Organization organization = (Organization) organizationJComboBox.getSelectedItem();
-        if (organization != null){
+        if (organization != null) {
             populateEmployeeComboBox(organization);
             populateRoleComboBox(organization);
         }

@@ -2,15 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterface.Hospital.Doctor;
+package UserInterface.Hospital.Treasurer;
 
-import UserInterface.Hospital.Treasurer.BrowseProductJPanel;
+import UserInterface.Hospital.Doctor.*;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Order.MasterOrderCatalog;
 import Business.Organization.DoctorOrganization;
 import Business.Organization.Organization;
 import Business.Organization.SupplierOrganization;
+import Business.Organization.TreasurerOrganization;
 import Business.Role.SupplierRole;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
@@ -23,10 +24,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author raunak
  */
-public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
+public class TreasurerWorkAreaJPanel extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
-    private DoctorOrganization doctorOrganization;
+    private TreasurerOrganization treasureOrganization;
     private SupplierOrganization supplierOrganization;
     private Enterprise enterprise;
     private UserAccount userAccount;
@@ -36,11 +37,11 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public DoctorWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, DoctorOrganization doctorOrganization, Enterprise enterprise, EcoSystem system) {
+    public TreasurerWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, TreasurerOrganization treasureOrganization, Enterprise enterprise, EcoSystem system) {
         initComponents();
 
         this.userProcessContainer = userProcessContainer;
-        this.doctorOrganization = doctorOrganization;
+        this.treasureOrganization = treasureOrganization;
         this.enterprise = enterprise;
         this.system = system;
         this.userAccount = account;

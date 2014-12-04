@@ -20,7 +20,8 @@ public abstract class Role {
         Admin("Admin"),
         Doctor("Doctor"),
         LabAssistant("Lab Assistant"),
-        Supplier("Supplier");
+        Supplier("Supplier"),
+        Treasurer("Treasurer");
         
         private String value;
         private RoleType(String value){

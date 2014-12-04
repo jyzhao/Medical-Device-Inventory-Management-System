@@ -37,6 +37,10 @@ public class OrganizationDirectory {
             organization = new SupplierOrganization();
             organizationList.add(organization);
         }
+        else if (type.getValue().equals(Type.Treasurer.getValue())){
+            organization = new TreasurerOrganization();
+            organizationList.add(organization);
+        }
         return organization;
     }
 }
