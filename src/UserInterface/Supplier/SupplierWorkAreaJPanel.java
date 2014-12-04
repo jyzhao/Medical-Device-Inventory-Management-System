@@ -39,23 +39,17 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
         this.system = system;
         this.userAccount = account;
         
-        populateRequestTable();
+        populateApprovedTable();
     }
     
-    public void populateRequestTable(){
-        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+    public void populateApprovedTable(){
+        DefaultTableModel model = (DefaultTableModel) approvedJTable.getModel();
         
         model.setRowCount(0);
-        for (WorkRequest request : userAccount.getWorkQueue().getWorkRequestList()){
-            Object[] row = new Object[4];
-            row[0] = request.getMessage();
-            row[1] = request.getReceiver();
-            row[2] = request.getStatus();
-            String result = ((LabTestWorkRequest) request).getTestResult();
-            row[3] = result == null ? "Waiting" : result;
+            Object[] row = new Object[1];
+            row[0] = userAccount.isApproved();
             
             model.addRow(row);
-        }
     }
 
     
@@ -69,28 +63,28 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        workRequestJTable = new javax.swing.JTable();
+        approvedJTable = new javax.swing.JTable();
         requestTestJButton = new javax.swing.JButton();
         refreshTestJButton = new javax.swing.JButton();
         managePButton = new javax.swing.JButton();
         reportButton = new javax.swing.JButton();
 
-        workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
+        approvedJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Message", "Receiver", "Status", "Result"
+                "Approved"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -101,12 +95,9 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(workRequestJTable);
-        if (workRequestJTable.getColumnModel().getColumnCount() > 0) {
-            workRequestJTable.getColumnModel().getColumn(0).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(1).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(2).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane1.setViewportView(approvedJTable);
+        if (approvedJTable.getColumnModel().getColumnCount() > 0) {
+            approvedJTable.getColumnModel().getColumn(0).setResizable(false);
         }
 
         requestTestJButton.setText("Request Test");
@@ -154,10 +145,8 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
                             .addGap(165, 165, 165))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(requestTestJButton)
-                            .addGap(86, 86, 86))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(refreshTestJButton)
-                            .addGap(103, 103, 103)))))
+                            .addGap(86, 86, 86)))
+                    .addComponent(refreshTestJButton)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +175,7 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
 
-        populateRequestTable();
+        populateApprovedTable();
         
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
@@ -207,11 +196,11 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_reportButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable approvedJTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton managePButton;
     private javax.swing.JButton refreshTestJButton;
     private javax.swing.JButton reportButton;
     private javax.swing.JButton requestTestJButton;
-    private javax.swing.JTable workRequestJTable;
     // End of variables declaration//GEN-END:variables
 }

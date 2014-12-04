@@ -9,7 +9,6 @@ import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
 import Business.Organization.TreasurerOrganization;
 import Business.UserAccount.UserAccount;
-import UserInterface.Admin.AdminWorkAreaJPanel;
 import UserInterface.Hospital.Treasurer.TreasurerWorkAreaJPanel;
 import javax.swing.JPanel;
 

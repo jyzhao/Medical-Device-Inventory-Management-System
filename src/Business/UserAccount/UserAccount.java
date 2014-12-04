@@ -15,7 +15,7 @@ import Business.WorkQueue.WorkQueue;
  * @author raunak
  */
 public class UserAccount {
-    
+
     private String username;
     private String password;
     private Employee employee;
@@ -23,15 +23,15 @@ public class UserAccount {
     private WorkQueue workQueue;
     private ProductCatalog productCatalog;
     private MasterOrderCatalog masterOrderCatalog;
+    private boolean approved;
 
-    
     public UserAccount() {
         workQueue = new WorkQueue();
         productCatalog = new ProductCatalog();
         masterOrderCatalog = new MasterOrderCatalog();
+        approved = false;
     }
-    
-    
+
     public String getUsername() {
         return username;
     }
@@ -76,13 +76,17 @@ public class UserAccount {
         return masterOrderCatalog;
     }
 
-    
-    
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
     @Override
     public String toString() {
         return username;
     }
-    
-    
-    
+
 }

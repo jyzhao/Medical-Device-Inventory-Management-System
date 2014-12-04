@@ -45,7 +45,9 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
     public void populateSupplierComboBox() {
         supplierJComboBox.removeAllItems();
         for (UserAccount userAccount : supplierOrganization.getUserAccountDirectory().getUserAccountList()) {
-            supplierJComboBox.addItem(userAccount);
+            if (userAccount.isApproved()) {
+                supplierJComboBox.addItem(userAccount);
+            }
         }
     }
 
