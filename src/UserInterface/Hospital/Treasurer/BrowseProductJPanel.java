@@ -186,7 +186,7 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -431,7 +431,7 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
 
         OrderItem oi = (OrderItem) orderJTable.getValueAt(selectedRow, 0);
 
-        if (modifyQuantityJTextField.getText() != null && modifyQuantityJTextField.getText().equals("")) {
+        if (modifyQuantityJTextField.getText() != null || modifyQuantityJTextField.getText().equals("")) {
             modifyQuantity = Integer.parseInt(modifyQuantityJTextField.getText());
         }
         else {

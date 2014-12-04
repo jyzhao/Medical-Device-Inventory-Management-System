@@ -4,6 +4,8 @@
  */
 package Business.WorkQueue;
 
+import Business.Order.OrderItem;
+import Business.Product.Product;
 import Business.UserAccount.UserAccount;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ import java.util.Date;
 public abstract class WorkRequest {
 
     private String message;
+    private OrderItem orderItem;
     private UserAccount sender;
     private UserAccount receiver;
     private String status;
@@ -71,4 +74,20 @@ public abstract class WorkRequest {
     public void setResolveDate(Date resolveDate) {
         this.resolveDate = resolveDate;
     }
+
+    public OrderItem getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(OrderItem orderItem) {
+        this.orderItem = orderItem;
+    }
+
+    @Override
+    public String toString() {
+        return "" + orderItem;
+    }
+    
+    
+    
 }

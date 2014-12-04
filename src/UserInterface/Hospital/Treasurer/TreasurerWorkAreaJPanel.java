@@ -8,6 +8,8 @@ import UserInterface.Hospital.Doctor.*;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Order.MasterOrderCatalog;
+import Business.Order.Order;
+import Business.Order.OrderItem;
 import Business.Organization.DoctorOrganization;
 import Business.Organization.Organization;
 import Business.Organization.SupplierOrganization;
@@ -47,29 +49,31 @@ public class TreasurerWorkAreaJPanel extends javax.swing.JPanel {
         this.userAccount = account;
         this.masterOrderCatalog = this.userAccount.getMasterOrderCatalog();
         organizationJComboBox.removeAllItems();
-        
-        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()){
+
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
             if (organization.getName().equals("Supplier Organization")) {
                 organizationJComboBox.addItem(organization);
             }
         }
-        
+        populateInventoryTable();
+
     }
 
-    public void populateRequestTable() {
-        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
-
+    private void populateInventoryTable() {
+        DefaultTableModel model = (DefaultTableModel) treasurerInventoryJTable.getModel();
         model.setRowCount(0);
-        for (WorkRequest request : userAccount.getWorkQueue().getWorkRequestList()) {
-            Object[] row = new Object[4];
-            row[0] = request.getMessage();
-            row[1] = request.getReceiver();
-            row[2] = request.getStatus();
-            String result = ((LabTestWorkRequest) request).getTestResult();
-            row[3] = result == null ? "Waiting" : result;
+        for (Order order : userAccount.getMasterOrderCatalog().getOrderCatalog()) {
+            for (OrderItem oi : order.getOrderItemList()) {
+                Object[] obj = new Object[4];
+                obj[0] = oi;
+                obj[1] = oi.getProduct().getPrice();
+                obj[2] = oi.getProduct().isReserved();
+                obj[3] = oi.getQuantity();
 
-            model.addRow(row);
+                model.addRow(obj);
+            }
         }
+
     }
 
     /**
@@ -82,13 +86,13 @@ public class TreasurerWorkAreaJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        workRequestJTable = new javax.swing.JTable();
+        treasurerInventoryJTable = new javax.swing.JTable();
         requestTestJButton = new javax.swing.JButton();
         refreshTestJButton = new javax.swing.JButton();
         browseProductCatalogJButton = new javax.swing.JButton();
         organizationJComboBox = new javax.swing.JComboBox();
 
-        workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
+        treasurerInventoryJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -96,30 +100,23 @@ public class TreasurerWorkAreaJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Message", "Receiver", "Status", "Result"
+                "Product Name", "Product ID", "Reserved", "Quantity"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(workRequestJTable);
-        if (workRequestJTable.getColumnModel().getColumnCount() > 0) {
-            workRequestJTable.getColumnModel().getColumn(0).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(1).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(2).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane1.setViewportView(treasurerInventoryJTable);
+        if (treasurerInventoryJTable.getColumnModel().getColumnCount() > 0) {
+            treasurerInventoryJTable.getColumnModel().getColumn(0).setResizable(false);
+            treasurerInventoryJTable.getColumnModel().getColumn(1).setResizable(false);
+            treasurerInventoryJTable.getColumnModel().getColumn(2).setResizable(false);
+            treasurerInventoryJTable.getColumnModel().getColumn(3).setResizable(false);
         }
 
         requestTestJButton.setText("Request Test");
@@ -197,7 +194,7 @@ public class TreasurerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
 
-        populateRequestTable();
+        populateInventoryTable();
 
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
@@ -214,9 +211,9 @@ public class TreasurerWorkAreaJPanel extends javax.swing.JPanel {
         try {
             supplierOrganization = (SupplierOrganization) organizationJComboBox.getSelectedItem();
         } catch (Exception e) {
-            
+
         }
-        
+
     }//GEN-LAST:event_organizationJComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -225,6 +222,6 @@ public class TreasurerWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox organizationJComboBox;
     private javax.swing.JButton refreshTestJButton;
     private javax.swing.JButton requestTestJButton;
-    private javax.swing.JTable workRequestJTable;
+    private javax.swing.JTable treasurerInventoryJTable;
     // End of variables declaration//GEN-END:variables
 }

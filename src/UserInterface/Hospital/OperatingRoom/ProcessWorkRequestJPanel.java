@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterface.Hospital.LabAssistant;
+package UserInterface.Hospital.OperatingRoom;
 
 import Business.WorkQueue.LabTestWorkRequest;
 import java.awt.CardLayout;
@@ -34,19 +34,19 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        submitJButton = new javax.swing.JButton();
+        confirmJButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        resultJTextField = new javax.swing.JTextField();
+        sideNoteJTextField = new javax.swing.JTextField();
         backJButton = new javax.swing.JButton();
 
-        submitJButton.setText("Submit Result");
-        submitJButton.addActionListener(new java.awt.event.ActionListener() {
+        confirmJButton.setText("Confirm");
+        confirmJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitJButtonActionPerformed(evt);
+                confirmJButtonActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Result");
+        jLabel1.setText("Sidenote:");
 
         backJButton.setText("Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -60,19 +60,17 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(backJButton)
-                    .addComponent(jLabel1))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(70, 70, 70)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addGap(14, 14, 14)
+                        .addComponent(sideNoteJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
-                        .addComponent(submitJButton)
-                        .addGap(63, 63, 63))))
+                        .addComponent(backJButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(confirmJButton)))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,10 +78,10 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sideNoteJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(submitJButton)
+                    .addComponent(confirmJButton)
                     .addComponent(backJButton))
                 .addContainerGap(169, Short.MAX_VALUE))
         );
@@ -96,15 +94,15 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_backJButtonActionPerformed
 
-    private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
-        request.setTestResult(resultJTextField.getText());
-        request.setStatus("Completed");
-    }//GEN-LAST:event_submitJButtonActionPerformed
+    private void confirmJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmJButtonActionPerformed
+        request.setTestResult(sideNoteJTextField.getText());
+        request.setStatus("CONFIRMED");
+    }//GEN-LAST:event_confirmJButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;
+    private javax.swing.JButton confirmJButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField resultJTextField;
-    private javax.swing.JButton submitJButton;
+    private javax.swing.JTextField sideNoteJTextField;
     // End of variables declaration//GEN-END:variables
 }

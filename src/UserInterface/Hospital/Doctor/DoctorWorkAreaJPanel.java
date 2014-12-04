@@ -8,14 +8,20 @@ import UserInterface.Hospital.Treasurer.BrowseProductJPanel;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Order.MasterOrderCatalog;
+import Business.Order.Order;
+import Business.Order.OrderItem;
 import Business.Organization.DoctorOrganization;
+import Business.Organization.LabOrganization;
 import Business.Organization.Organization;
 import Business.Organization.SupplierOrganization;
+import Business.Organization.TreasurerOrganization;
+import Business.Product.Product;
 import Business.Role.SupplierRole;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -45,14 +51,9 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         this.system = system;
         this.userAccount = account;
         this.masterOrderCatalog = this.userAccount.getMasterOrderCatalog();
-        organizationJComboBox.removeAllItems();
-        
-        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()){
-            if (organization.getName().equals("Supplier Organization")) {
-                organizationJComboBox.addItem(organization);
-            }
-        }
-        
+
+        populateInventoryTable();
+        populateRequestTable();
     }
 
     public void populateRequestTable() {
@@ -61,14 +62,40 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         for (WorkRequest request : userAccount.getWorkQueue().getWorkRequestList()) {
             Object[] row = new Object[4];
-            row[0] = request.getMessage();
+            row[0] = request.getOrderItem();
             row[1] = request.getReceiver();
             row[2] = request.getStatus();
             String result = ((LabTestWorkRequest) request).getTestResult();
-            row[3] = result == null ? "Waiting" : result;
+            row[3] = result == null ? "WAITING" : result;
 
             model.addRow(row);
         }
+    }
+
+    public void populateInventoryTable() {
+        DefaultTableModel model = (DefaultTableModel) doctorInventoryJTable.getModel();
+
+        model.setRowCount(0);
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (organization instanceof TreasurerOrganization) {
+                for (UserAccount ua : organization.getUserAccountDirectory().getUserAccountList()) {
+                    for (Order order : ua.getMasterOrderCatalog().getOrderCatalog()) {
+                        for (OrderItem oi : order.getOrderItemList()) {
+
+                            if (oi.getQuantity() > 0) {
+                                Object[] obj = new Object[3];
+                                obj[0] = oi;
+                                obj[1] = oi.getProduct().getModelNumber();
+                                obj[2] = oi.getQuantity();
+                                model.addRow(obj);
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     /**
@@ -82,20 +109,18 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         workRequestJTable = new javax.swing.JTable();
-        requestTestJButton = new javax.swing.JButton();
         refreshTestJButton = new javax.swing.JButton();
-        browseProductCatalogJButton = new javax.swing.JButton();
-        organizationJComboBox = new javax.swing.JComboBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        doctorInventoryJTable = new javax.swing.JTable();
+        refreshInventoryJButton = new javax.swing.JButton();
+        reserveJButton = new javax.swing.JButton();
 
         workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Message", "Receiver", "Status", "Result"
+                "Product", "Operating Room", "Status", "Sidenote"
             }
         ) {
             Class[] types = new Class [] {
@@ -121,13 +146,6 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
             workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        requestTestJButton.setText("Request Test");
-        requestTestJButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                requestTestJButtonActionPerformed(evt);
-            }
-        });
-
         refreshTestJButton.setText("Refresh");
         refreshTestJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,17 +153,40 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        browseProductCatalogJButton.setText("Browse Product Catalog");
-        browseProductCatalogJButton.addActionListener(new java.awt.event.ActionListener() {
+        doctorInventoryJTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Product Name", "Product ID", "Quantity"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(doctorInventoryJTable);
+        if (doctorInventoryJTable.getColumnModel().getColumnCount() > 0) {
+            doctorInventoryJTable.getColumnModel().getColumn(0).setResizable(false);
+            doctorInventoryJTable.getColumnModel().getColumn(1).setResizable(false);
+            doctorInventoryJTable.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        refreshInventoryJButton.setText("Refresh");
+        refreshInventoryJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                browseProductCatalogJButtonActionPerformed(evt);
+                refreshInventoryJButtonActionPerformed(evt);
             }
         });
 
-        organizationJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        organizationJComboBox.addActionListener(new java.awt.event.ActionListener() {
+        reserveJButton.setText("Reserve");
+        reserveJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                organizationJComboBoxActionPerformed(evt);
+                reserveJButtonActionPerformed(evt);
             }
         });
 
@@ -154,76 +195,85 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(106, Short.MAX_VALUE)
+                .addGap(230, 230, 230)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(165, 165, 165))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(organizationJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(browseProductCatalogJButton)
-                        .addGap(58, 58, 58)
-                        .addComponent(requestTestJButton)
-                        .addGap(86, 86, 86))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(refreshTestJButton)
-                        .addGap(103, 103, 103))))
+                    .addComponent(refreshTestJButton)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(refreshInventoryJButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(reserveJButton))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(323, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(refreshTestJButton)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(requestTestJButton)
-                    .addComponent(browseProductCatalogJButton)
-                    .addComponent(organizationJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(183, Short.MAX_VALUE))
+                    .addComponent(refreshInventoryJButton)
+                    .addComponent(reserveJButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(refreshTestJButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(99, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void requestTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestTestJButtonActionPerformed
+    private void refreshInventoryJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshInventoryJButtonActionPerformed
+        // TODO add your handling code here:
+        populateInventoryTable();
+    }//GEN-LAST:event_refreshInventoryJButtonActionPerformed
 
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        userProcessContainer.add("RequestLabTestJPanel", new RequestLabTestJPanel(userProcessContainer, userAccount, enterprise));
-        layout.next(userProcessContainer);
+    private void reserveJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveJButtonActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = doctorInventoryJTable.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row !!!");
+            return;
+        }
 
-    }//GEN-LAST:event_requestTestJButtonActionPerformed
+        OrderItem oi = (OrderItem) doctorInventoryJTable.getValueAt(selectedRow, 0);
+        oi.setQuantity(oi.getQuantity() - 1);
+
+        LabTestWorkRequest request = new LabTestWorkRequest();
+
+        request.setOrderItem(oi);
+        request.setSender(userAccount);
+        request.setStatus("Sent");
+
+        Organization org = null;
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (organization instanceof LabOrganization) {
+                org = organization;
+                break;
+            }
+        }
+        if (org != null) {
+            org.getWorkQueue().getWorkRequestList().add(request);
+            userAccount.getWorkQueue().getWorkRequestList().add(request);
+        }
+
+        populateInventoryTable();
+        populateRequestTable();
+    }//GEN-LAST:event_reserveJButtonActionPerformed
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
 
         populateRequestTable();
-
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
-    private void browseProductCatalogJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseProductCatalogJButtonActionPerformed
-        // TODO add your handling code here:
-        BrowseProductJPanel bpjp = new BrowseProductJPanel(userProcessContainer, supplierOrganization, masterOrderCatalog);
-        userProcessContainer.add("BrowseProductJPanel", bpjp);
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
-    }//GEN-LAST:event_browseProductCatalogJButtonActionPerformed
-
-    private void organizationJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationJComboBoxActionPerformed
-        // TODO add your handling code here:
-        try {
-            supplierOrganization = (SupplierOrganization) organizationJComboBox.getSelectedItem();
-        } catch (Exception e) {
-            
-        }
-        
-    }//GEN-LAST:event_organizationJComboBoxActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton browseProductCatalogJButton;
+    private javax.swing.JTable doctorInventoryJTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox organizationJComboBox;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton refreshInventoryJButton;
     private javax.swing.JButton refreshTestJButton;
-    private javax.swing.JButton requestTestJButton;
+    private javax.swing.JButton reserveJButton;
     private javax.swing.JTable workRequestJTable;
     // End of variables declaration//GEN-END:variables
 }

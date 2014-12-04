@@ -16,6 +16,7 @@ public class Product {
     private int modelNumber;
     private int availability;
     private int initialAvailability;
+    private boolean reserved = false;
 
     public int getInitialAvailability() {
         return initialAvailability;
@@ -57,6 +58,16 @@ public class Product {
     public int getModelNumber() {
         return modelNumber;
     }
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
+    
+    
     
     @Override
     public String toString() {
