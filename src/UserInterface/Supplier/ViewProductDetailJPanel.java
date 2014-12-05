@@ -29,6 +29,9 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
         idField.setText(convertInteger(p.getModelNumber()));
         priceField.setText(convertInteger(p.getPrice()));
         availabilityJTextField.setText(convertInteger(p.getAvailability()));
+        manufacturerJTextField.setText(p.getManufacturer());
+        distributorJTextField.setText(p.getDistributor());
+        expirationDateJTextField.setText(p.getExpirationDate());
     }
 
     
@@ -55,6 +58,12 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
         saveButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         availabilityJTextField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        expirationDateJTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        distributorJTextField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        manufacturerJTextField = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -87,7 +96,7 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
                 createButtonActionPerformed(evt);
             }
         });
-        add(createButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 176, -1));
+        add(createButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, 176, -1));
 
         backButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         backButton1.setText("<< Back");
@@ -96,7 +105,7 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
                 backButton1ActionPerformed(evt);
             }
         });
-        add(backButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        add(backButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, -1, -1));
 
         idField.setEditable(false);
         idField.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -115,7 +124,7 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
                 saveButtonActionPerformed(evt);
             }
         });
-        add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 70, 30));
+        add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 450, 70, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Availability");
@@ -123,12 +132,36 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
 
         availabilityJTextField.setEnabled(false);
         add(availabilityJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 160, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setText("Distributor:");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, -1, -1));
+
+        expirationDateJTextField.setEditable(false);
+        add(expirationDateJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 160, 30));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setText("Manufacturer:");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+
+        distributorJTextField.setEditable(false);
+        add(distributorJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 160, 30));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setText("Expiration Date:");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
+
+        manufacturerJTextField.setEditable(false);
+        add(manufacturerJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 160, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         // TODO add your handling code here:
        nameField.setEditable(true);
        priceField.setEditable(true);
+       manufacturerJTextField.setEditable(true);
+       distributorJTextField.setEditable(true);
+       expirationDateJTextField.setEditable(true);
        saveButton.setEnabled(true);
        availabilityJTextField.setEnabled(true);
 }//GEN-LAST:event_createButtonActionPerformed
@@ -146,18 +179,27 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
         product.setProdName(nameField.getText());
         product.setAvailability(Integer.parseInt(availabilityJTextField.getText()));
         product.setInitialAvailability(Integer.parseInt(availabilityJTextField.getText()));
+        product.setManufacturer(manufacturerJTextField.getText());
+        product.setDistributor(distributorJTextField.getText());
+        product.setExpirationDate(expirationDateJTextField.getText());
     }//GEN-LAST:event_saveButtonActionPerformed
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField availabilityJTextField;
     private javax.swing.JButton backButton1;
     private javax.swing.JButton createButton;
+    private javax.swing.JTextField distributorJTextField;
+    private javax.swing.JTextField expirationDateJTextField;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField manufacturerJTextField;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField priceField;
     private javax.swing.JButton saveButton;

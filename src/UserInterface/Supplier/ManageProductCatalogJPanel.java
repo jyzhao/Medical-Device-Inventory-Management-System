@@ -37,11 +37,15 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
         }
         
         for(Product p : userAccount.getProductCatalog().getProductCatalog()) {
-            Object row[] = new Object[4];
+            Object row[] = new Object[8];
             row[0] = p;
             row[1] = p.getModelNumber();
             row[2] = p.getPrice();
             row[3] = p.getAvailability();
+            row[4] = p.isHazardous();
+            row[5] = p.getManufacturer();
+            row[6] = p.getDistributor();
+            row[7] = p.getExpirationDate();
             model.addRow(row);
             }
         }
@@ -78,18 +82,26 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
         productCatalog.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         productCatalog.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Product Name", "Product ID", "Price", "Availability"
+                "Product Name", "Product ID", "Price", "Availability", "Hazardous", "Manufacturer", "Distributor", "Expiration Date"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(productCatalog);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 500, 170));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 680, 170));
 
         viewPButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         viewPButton.setText("View Product Detail >>");

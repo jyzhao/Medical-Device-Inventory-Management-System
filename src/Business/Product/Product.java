@@ -14,6 +14,10 @@ public class Product {
     private String prodName;
     private int price;
     private int modelNumber;
+    private String manufacturer;
+    private boolean hazardous;
+    private String distributor;
+    private String expirationDate;
     private int availability;
     private int initialAvailability;
     private boolean reserved = false;
@@ -65,6 +69,38 @@ public class Product {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public boolean isHazardous() {
+        return hazardous;
+    }
+
+    public void setHazardous(boolean hazardous) {
+        this.hazardous = hazardous;
+    }
+
+    public String getDistributor() {
+        return distributor;
+    }
+
+    public void setDistributor(String distributor) {
+        this.distributor = distributor;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
     }
     
     

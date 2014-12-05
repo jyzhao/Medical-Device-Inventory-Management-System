@@ -63,11 +63,15 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
         }
 
         for (Product product : userAccount.getProductCatalog().getProductCatalog()) {
-            Object[] row = new Object[4];
+            Object[] row = new Object[8];
             row[0] = product;
             row[1] = product.getModelNumber();
             row[2] = product.getPrice();
             row[3] = product.getAvailability();
+            row[4] = product.isHazardous();
+            row[5] = product.getManufacturer();
+            row[6] = product.getDistributor();
+            row[7] = product.getExpirationDate();
 
             model.addRow(row);
         }
@@ -149,15 +153,23 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
 
         productDetailJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Product Name", "Product ID", "Product Price", "Product Availability"
+                "Product Name", "Product ID", "Product Price", "Product Availability", "Hazardous", "Manufacturer", "Distributor", "Expiration Date"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(productDetailJTable);
 
         viewProductDetailJButton.setText("View Product Detail");
@@ -269,26 +281,25 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
                 .addComponent(checkoutJButton)
                 .addGap(325, 325, 325))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(viewProductDetailJButton)
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(quantityJSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(addToCartJButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(viewOrderItemDetailJButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(modifyQuantityJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(removeItemJButton)))
+                .addGap(109, 109, 109)
+                .addComponent(viewOrderItemDetailJButton)
+                .addGap(18, 18, 18)
+                .addComponent(modifyQuantityJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(removeItemJButton)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addComponent(viewProductDetailJButton)
+                .addGap(45, 45, 45)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(quantityJSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(addToCartJButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,15 +314,15 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
                     .addComponent(supplierJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchByProductNameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchByProductNameJButton))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewProductDetailJButton)
                     .addComponent(addToCartJButton)
                     .addComponent(quantityJSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -397,6 +408,11 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
         Product product = (Product) productDetailJTable.getValueAt(selectedRow, 0);
         int quantity = (Integer) (quantityJSpinner.getValue());
 
+        if (quantity <= 0) {
+            JOptionPane.showMessageDialog(null, "Invalid quantity !!!");
+            return;
+        }
+        
         if (order == null) {
             order = new Order();
 

@@ -186,7 +186,7 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
         } else {
             for (UserAccount ua : enterprise.getUserAccountDirectory().getUserAccountList()) {
                 if (ua.getRole() instanceof AdminRole) {
-                    String alert = String.format("Approval request from %s", userAccount.getUsername());
+                    String alert = String.format("Approval request from %s !!!", userAccount.getUsername());
                     ua.setAlert(alert);
 
                     //System.out.println(String.format("%s: %s", ua.getUsername(), ua.getAlert()));
