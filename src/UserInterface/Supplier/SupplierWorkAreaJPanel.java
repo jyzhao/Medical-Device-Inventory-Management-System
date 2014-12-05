@@ -7,12 +7,16 @@ package UserInterface.Supplier;
 import Business.EcoSystem;
 import UserInterface.Hospital.Doctor.*;
 import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.AdminOrganization;
 import Business.Organization.DoctorOrganization;
+import Business.Organization.Organization;
 import Business.Organization.SupplierOrganization;
+import Business.Role.AdminRole;
 import Business.UserAccount.UserAccount;
-import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,32 +31,33 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
     private Enterprise enterprise;
     private EcoSystem system;
     private UserAccount userAccount;
+
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public SupplierWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, SupplierOrganization organization, Enterprise enterprise, EcoSystem system) {
+    public SupplierWorkAreaJPanel(JPanel userProcessContainer, UserAccount userAccount, SupplierOrganization organization, Enterprise enterprise, EcoSystem system) {
         initComponents();
-        
+
         this.userProcessContainer = userProcessContainer;
         this.organization = organization;
         this.enterprise = enterprise;
         this.system = system;
-        this.userAccount = account;
-        
+        this.userAccount = userAccount;
+
         populateApprovedTable();
     }
-    
-    public void populateApprovedTable(){
+
+    public void populateApprovedTable() {
         DefaultTableModel model = (DefaultTableModel) approvedJTable.getModel();
-        
+
         model.setRowCount(0);
-            Object[] row = new Object[1];
-            row[0] = userAccount.isApproved();
-            
-            model.addRow(row);
+        Object[] row = new Object[2];
+        row[0] = userAccount.getEmployee().getName();
+        row[1] = userAccount.isApproved();
+
+        model.addRow(row);
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,20 +76,20 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
 
         approvedJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Approved"
+                "Supplier", "Approved"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -98,9 +103,10 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(approvedJTable);
         if (approvedJTable.getColumnModel().getColumnCount() > 0) {
             approvedJTable.getColumnModel().getColumn(0).setResizable(false);
+            approvedJTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        requestTestJButton.setText("Request Test");
+        requestTestJButton.setText("Request Approval");
         requestTestJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 requestTestJButtonActionPerformed(evt);
@@ -137,16 +143,14 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(192, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(reportButton)
-                    .addComponent(managePButton)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(165, 165, 165))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(requestTestJButton)
-                            .addGap(86, 86, 86)))
-                    .addComponent(refreshTestJButton)))
+                    .addComponent(refreshTestJButton)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(requestTestJButton)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(managePButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(reportButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(165, 165, 165))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,35 +159,45 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(refreshTestJButton)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(18, 18, 18)
                 .addComponent(requestTestJButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(managePButton)
-                .addGap(62, 62, 62)
-                .addComponent(reportButton)
+                .addGap(33, 33, 33)
+                .addComponent(managePButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(reportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(55, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void requestTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestTestJButtonActionPerformed
-        
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        userProcessContainer.add("RequestLabTestJPanel", new RequestLabTestJPanel(userProcessContainer, userAccount, enterprise));
-        layout.next(userProcessContainer);
-        
+        if (userAccount.isApproved() == true) {
+            JOptionPane.showMessageDialog(null, "You are already approved !!!");
+            return;
+        } else {
+            for (UserAccount ua : enterprise.getUserAccountDirectory().getUserAccountList()) {
+                if (ua.getRole() instanceof AdminRole) {
+                    String alert = String.format("Approval request from %s", userAccount.getUsername());
+                    ua.setAlert(alert);
+
+                    //System.out.println(String.format("%s: %s", ua.getUsername(), ua.getAlert()));
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, "Approval request sent !!!");
+        }
     }//GEN-LAST:event_requestTestJButtonActionPerformed
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
 
         populateApprovedTable();
-        
+
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
     private void managePButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managePButtonActionPerformed
         // TODO add your handling code here:
         ManageProductCatalogJPanel mpcjp = new ManageProductCatalogJPanel(userProcessContainer, userAccount);
-        userProcessContainer.add("ManageProductCatalogJPanel",mpcjp);
-        CardLayout layout = (CardLayout)userProcessContainer.getLayout();
+        userProcessContainer.add("ManageProductCatalogJPanel", mpcjp);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
     }//GEN-LAST:event_managePButtonActionPerformed
 
@@ -191,7 +205,7 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         ProductReportJPanel prjp = new ProductReportJPanel(userProcessContainer, userAccount);
         userProcessContainer.add("ProductReportJPanelSupplier", prjp);
-        CardLayout layout = (CardLayout)userProcessContainer.getLayout();
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
     }//GEN-LAST:event_reportButtonActionPerformed
 

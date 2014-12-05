@@ -24,6 +24,7 @@ public class UserAccount {
     private ProductCatalog productCatalog;
     private MasterOrderCatalog masterOrderCatalog;
     private boolean approved;
+    private String alert;
 
     public UserAccount() {
         workQueue = new WorkQueue();
@@ -83,6 +84,16 @@ public class UserAccount {
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
+
+    public String getAlert() {
+        return alert;
+    }
+
+    public void setAlert(String alert) {
+        this.alert = alert;
+    }
+    
+    
 
     @Override
     public String toString() {

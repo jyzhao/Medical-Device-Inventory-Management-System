@@ -25,7 +25,7 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
         initComponents();
         userProcessContainer = upc;
         userAccount = ua;
-        sNameTextField.setText(userAccount.getEmployee().getName());
+        supplierNameTextField.setText(userAccount.getEmployee().getName());
         refreshTable();
     }
     
@@ -65,7 +65,7 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
         searchPButton = new javax.swing.JButton();
         backButton4 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        sNameTextField = new javax.swing.JTextField();
+        supplierNameTextField = new javax.swing.JTextField();
         refreshButton = new javax.swing.JButton();
         delButton5 = new javax.swing.JButton();
 
@@ -131,11 +131,11 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
         jLabel2.setText("Supplier:");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 170, -1));
 
-        sNameTextField.setEditable(false);
-        sNameTextField.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
-        sNameTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        sNameTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(102, 102, 102), null, null));
-        add(sNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 150, 30));
+        supplierNameTextField.setEditable(false);
+        supplierNameTextField.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        supplierNameTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        supplierNameTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(102, 102, 102), null, null));
+        add(supplierNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 150, 30));
 
         refreshButton.setText("Refresh");
         refreshButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -215,8 +215,8 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable productCatalog;
     private javax.swing.JButton refreshButton;
-    private javax.swing.JTextField sNameTextField;
     private javax.swing.JButton searchPButton;
+    private javax.swing.JTextField supplierNameTextField;
     private javax.swing.JButton viewPButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,6 +8,7 @@ import Business.EcoSystem;
 import Business.Employee.Employee;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
+import Business.Role.AdminRole;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
@@ -301,6 +302,12 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         
         UserAccount userAccount = (UserAccount) userJTable.getValueAt(selectedRow, 0);
         userAccount.setApproved(true);
+        
+        for (UserAccount ua : enterprise.getUserAccountDirectory().getUserAccountList()) {
+                if (ua.getRole() instanceof AdminRole) {
+                    ua.setAlert(null);
+                }
+            }
         
         populateUserAccountTable();
     }//GEN-LAST:event_approveJButtonActionPerformed

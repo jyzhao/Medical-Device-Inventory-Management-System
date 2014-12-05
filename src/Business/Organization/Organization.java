@@ -11,10 +11,6 @@ import Business.UserAccount.UserAccountDirectory;
 import Business.WorkQueue.WorkQueue;
 import java.util.ArrayList;
 
-/**
- *
- * @author raunak
- */
 public abstract class Organization {
 
     private String name;
@@ -38,7 +34,7 @@ public abstract class Organization {
 //            public Organization createOrganization() {
 //                return new DoctorOrganization();
 //            }
-        }, Lab("Lab Organization"){
+        }, OperatingRoom("Operating Room Organization"){
 //            public Organization createOrganization() {
 //                return new LabOrganization();
 //            }

@@ -9,10 +9,6 @@ import Business.Role.Role;
 import Business.Role.SupplierRole;
 import java.util.ArrayList;
 
-/**
- *
- * @author raunak
- */
 public class SupplierOrganization extends Organization{
 
     public SupplierOrganization() {

@@ -11,7 +11,7 @@ import Business.Order.MasterOrderCatalog;
 import Business.Order.Order;
 import Business.Order.OrderItem;
 import Business.Organization.DoctorOrganization;
-import Business.Organization.LabOrganization;
+import Business.Organization.OperatingRoomOrganization;
 import Business.Organization.Organization;
 import Business.Organization.SupplierOrganization;
 import Business.Organization.TreasurerOrganization;
@@ -248,7 +248,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
 
         Organization org = null;
         for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            if (organization instanceof LabOrganization) {
+            if (organization instanceof OperatingRoomOrganization) {
                 org = organization;
                 break;
             }

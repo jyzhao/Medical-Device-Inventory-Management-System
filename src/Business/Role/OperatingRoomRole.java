@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  *
  * @author raunak
  */
-public class LabAssistantRole extends Role {
+public class OperatingRoomRole extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem system) {

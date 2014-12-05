@@ -6,7 +6,7 @@ package UserInterface.Hospital.OperatingRoom;
 
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
-import Business.Organization.LabOrganization;
+import Business.Organization.OperatingRoomOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
@@ -25,7 +25,7 @@ public class OperatingRoomWorkAreaJPanel extends javax.swing.JPanel {
     private JPanel userProcessContainer;
     private EcoSystem system;
     private UserAccount userAccount;
-    private LabOrganization labOrganization;
+    private OperatingRoomOrganization labOrganization;
     private Enterprise enterprise;
 
     /**
@@ -37,7 +37,7 @@ public class OperatingRoomWorkAreaJPanel extends javax.swing.JPanel {
         this.userProcessContainer = userProcessContainer;
         this.userAccount = account;
         this.system = system;
-        this.labOrganization = (LabOrganization) organization;
+        this.labOrganization = (OperatingRoomOrganization) organization;
         this.enterprise = enterprise;
 
         populateTable();

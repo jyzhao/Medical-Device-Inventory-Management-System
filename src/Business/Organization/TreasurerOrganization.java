@@ -8,10 +8,6 @@ import Business.Role.Role;
 import Business.Role.TreasurerRole;
 import java.util.ArrayList;
 
-/**
- *
- * @author raunak
- */
 public class TreasurerOrganization extends Organization{
 
     public TreasurerOrganization() {

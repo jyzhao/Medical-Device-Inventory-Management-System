@@ -8,7 +8,9 @@ package UserInterface.Admin;
 
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -20,13 +22,20 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     JPanel userProcessContainer;
     Enterprise enterprise;
     EcoSystem system;
+    UserAccount userAccount;
     
     /** Creates new form AdminWorkAreaJPanel */
-    public AdminWorkAreaJPanel(JPanel userProcessContainer, Enterprise enterprise, EcoSystem system) {
+    public AdminWorkAreaJPanel(JPanel userProcessContainer, UserAccount userAccount, Enterprise enterprise, EcoSystem system) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.enterprise = enterprise;
         this.system = system;
+        this.userAccount = userAccount;
+        
+        if (userAccount.getAlert() != null) {
+            JOptionPane.showMessageDialog(null, userAccount.getAlert());
+        }
+            
     }
     
     /** This method is called from within the constructor to

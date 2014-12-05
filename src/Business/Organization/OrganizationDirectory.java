@@ -7,10 +7,6 @@ package Business.Organization;
 import Business.Organization.Organization.Type;
 import java.util.ArrayList;
 
-/**
- *
- * @author raunak
- */
 public class OrganizationDirectory {
     
     private ArrayList<Organization> organizationList;
@@ -29,8 +25,8 @@ public class OrganizationDirectory {
             organization = new DoctorOrganization();
             organizationList.add(organization);
         }
-        else if (type.getValue().equals(Type.Lab.getValue())){
-            organization = new LabOrganization();
+        else if (type.getValue().equals(Type.OperatingRoom.getValue())){
+            organization = new OperatingRoomOrganization();
             organizationList.add(organization);
         }
         else if (type.getValue().equals(Type.Supplier.getValue())){
