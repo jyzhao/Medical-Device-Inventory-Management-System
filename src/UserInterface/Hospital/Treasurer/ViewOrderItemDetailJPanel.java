@@ -54,7 +54,7 @@ public class ViewOrderItemDetailJPanel extends javax.swing.JPanel {
         productNameJTextField = new javax.swing.JTextField();
         totalPriceJTextField = new javax.swing.JTextField();
         productQuantityJTextField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         jLabel1.setText("Product Name");
 
@@ -69,7 +69,8 @@ public class ViewOrderItemDetailJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setText("View Order Item Detail");
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel6.setText("View Order Item Detail");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -89,19 +90,18 @@ public class ViewOrderItemDetailJPanel extends javax.swing.JPanel {
                             .addComponent(productQuantityJTextField)
                             .addComponent(totalPriceJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(288, 288, 288)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(322, 322, 322)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(jLabel6)))
                 .addContainerGap(215, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jLabel4)
-                .addGap(55, 55, 55)
+                .addComponent(jLabel6)
+                .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -134,7 +134,7 @@ public class ViewOrderItemDetailJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField productNameJTextField;
     private javax.swing.JTextField productQuantityJTextField;
     private javax.swing.JTextField totalPriceJTextField;

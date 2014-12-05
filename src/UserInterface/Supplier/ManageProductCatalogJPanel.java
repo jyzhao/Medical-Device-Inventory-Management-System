@@ -73,7 +73,7 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Manage Product Catalog");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, -1, -1));
 
         productCatalog.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         productCatalog.setModel(new javax.swing.table.DefaultTableModel(
