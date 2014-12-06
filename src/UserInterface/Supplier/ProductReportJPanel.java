@@ -115,6 +115,8 @@ public class ProductReportJPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Top Sale Product:");
 
+        topSaleProductJTextField.setEditable(false);
+
         performanceChartJButton.setText("Performance Chart");
         performanceChartJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

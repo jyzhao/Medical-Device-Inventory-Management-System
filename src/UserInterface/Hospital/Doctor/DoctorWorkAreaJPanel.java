@@ -255,7 +255,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
 
         request.setOrderItem(oi);
         request.setSender(userAccount);
-        request.setStatus("Sent");
+        request.setStatus("SENT");
 
         Organization org = null;
         for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {

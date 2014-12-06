@@ -191,10 +191,7 @@ public class BrowseProductJPanel extends javax.swing.JPanel {
 
         orderJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Name", "Price", "Quantity", "Total Price"

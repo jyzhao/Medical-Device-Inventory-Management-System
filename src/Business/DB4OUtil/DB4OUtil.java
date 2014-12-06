@@ -67,7 +67,7 @@ public class DB4OUtil {
             system = ConfigureASystem.configure();  // If there's no System in the record, create a new one
         }
         else{
-            system = systems.get(0);
+            system = systems.get(systems.size() - 1);
         }
         conn.close();
         return system;
